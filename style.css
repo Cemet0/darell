@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+    background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+    background-attachment: fixed;
+}
+
 /* Hardware acceleration for smooth animations */
 .spec-card,
 .action-btn,
@@ -18,7 +24,10 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     min-height: 100vh;
+    height: 100%;
     padding: 20px;
     position: relative;
     overflow-x: hidden;
