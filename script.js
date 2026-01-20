@@ -3,7 +3,7 @@ function copyCode() {
     const code = 'DARELXKANA';
     
     navigator.clipboard.writeText(code).then(() => {
-        showToast();
+        showToast('Kode berhasil dicopy!');
     }).catch(err => {
         console.error('Failed to copy:', err);
         // Fallback for older browsers
@@ -15,7 +15,32 @@ function copyCode() {
         textArea.select();
         try {
             document.execCommand('copy');
-            showToast();
+            showToast('Kode berhasil dicopy!');
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+        }
+        document.body.removeChild(textArea);
+    });
+}
+
+// Copy crosshair code
+function copyCrosshairCode() {
+    const crosshairCode = '0;P;c;5;h;0;d;1;z;3;0t;4;0l;3;0v;3;0o;0;0a;1;0f;0;1b;0';
+    
+    navigator.clipboard.writeText(crosshairCode).then(() => {
+        showToast('Crosshair code berhasil dicopy!');
+    }).catch(err => {
+        console.error('Failed to copy:', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = crosshairCode;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            showToast('Crosshair code berhasil dicopy!');
         } catch (err) {
             console.error('Fallback copy failed:', err);
         }
@@ -24,8 +49,9 @@ function copyCode() {
 }
 
 // Show toast notification
-function showToast() {
+function showToast(message) {
     const toast = document.getElementById('toast');
+    toast.textContent = message;
     toast.classList.add('show');
     
     setTimeout(() => {
