@@ -1,93 +1,94 @@
 // Copy promo code
 function copyCode() {
+    console.log('copyCode function called');
     const code = 'DARELXKANA';
     
-    navigator.clipboard.writeText(code).then(() => {
-        showToast('Kode berhasil dicopy!');
-    }).catch(err => {
-        console.error('Failed to copy:', err);
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = code;
-        textArea.style.position = 'fixed';
-        textArea.style.opacity = '0';
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            document.execCommand('copy');
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(code).then(() => {
+            console.log('Clipboard API success');
             showToast('Kode berhasil dicopy!');
-        } catch (err) {
-            console.error('Fallback copy failed:', err);
-        }
-        document.body.removeChild(textArea);
-    });
+        }).catch(err => {
+            console.error('Clipboard API failed:', err);
+            fallbackCopy(code, 'Kode berhasil dicopy!');
+        });
+    } else {
+        console.log('Clipboard API not available, using fallback');
+        fallbackCopy(code, 'Kode berhasil dicopy!');
+    }
 }
 
 // Copy crosshair code
 function copyCrosshairCode() {
+    console.log('copyCrosshairCode function called');
     const crosshairCode = '0;P;c;5;h;0;d;1;z;3;0t;4;0l;3;0v;3;0o;0;0a;1;0f;0;1b;0';
     
-    navigator.clipboard.writeText(crosshairCode).then(() => {
-        showToast('Crosshair code berhasil dicopy!');
-    }).catch(err => {
-        console.error('Failed to copy:', err);
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = crosshairCode;
-        textArea.style.position = 'fixed';
-        textArea.style.opacity = '0';
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            document.execCommand('copy');
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(crosshairCode).then(() => {
+            console.log('Crosshair clipboard API success');
             showToast('Crosshair code berhasil dicopy!');
-        } catch (err) {
-            console.error('Fallback copy failed:', err);
+        }).catch(err => {
+            console.error('Crosshair clipboard API failed:', err);
+            fallbackCopy(crosshairCode, 'Crosshair code berhasil dicopy!');
+        });
+    } else {
+        console.log('Clipboard API not available for crosshair, using fallback');
+        fallbackCopy(crosshairCode, 'Crosshair code berhasil dicopy!');
+    }
+}
+
+// Fallback copy function
+function fallbackCopy(text, message) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            console.log('Fallback copy successful');
+            showToast(message);
+        } else {
+            console.log('Fallback copy failed');
+            showToast('Copy gagal, coba lagi');
         }
-        document.body.removeChild(textArea);
-    });
+    } catch (err) {
+        console.error('Fallback copy error:', err);
+        showToast('Copy gagal, coba lagi');
+    }
+    
+    document.body.removeChild(textArea);
 }
 
 // Show toast notification
 function showToast(message) {
+    console.log('showToast called with message:', message);
     const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 2500);
+    if (toast) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        console.log('Toast shown');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            console.log('Toast hidden');
+        }, 2500);
+    } else {
+        console.error('Toast element not found');
+    }
 }
 
-// Optimize performance
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// Add ripple effect to buttons (only if motion is allowed)
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
-    if (!prefersReducedMotion) {
-        const buttons = document.querySelectorAll('.action-btn, .spec-card');
-        
-        buttons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.classList.add('ripple');
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-    }
+    console.log('DOM loaded, script initialized');
+    
+    // Test if functions are available
+    console.log('copyCode function available:', typeof copyCode === 'function');
+    console.log('copyCrosshairCode function available:', typeof copyCrosshairCode === 'function');
     
     // Smooth scroll for mobile
     if ('scrollBehavior' in document.documentElement.style) {
@@ -102,24 +103,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-// Add ripple CSS
-const style = document.createElement('style');
-style.textContent = `
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
-        transform: scale(0);
-        animation: ripple-animation 0.6s ease-out;
-        pointer-events: none;
-    }
-    
-    @keyframes ripple-animation {
-        to {
-            transform: scale(2);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
