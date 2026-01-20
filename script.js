@@ -86,6 +86,24 @@ function showToast(message) {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, script initialized');
     
+    // Add event listeners for copy buttons
+    const promoCopyBtn = document.getElementById('promo-copy-btn');
+    const crosshairCopyBtn = document.getElementById('crosshair-copy-btn');
+    
+    if (promoCopyBtn) {
+        promoCopyBtn.addEventListener('click', copyCode);
+        console.log('Promo copy button event listener added');
+    } else {
+        console.error('Promo copy button not found');
+    }
+    
+    if (crosshairCopyBtn) {
+        crosshairCopyBtn.addEventListener('click', copyCrosshairCode);
+        console.log('Crosshair copy button event listener added');
+    } else {
+        console.error('Crosshair copy button not found');
+    }
+    
     // Test if functions are available
     console.log('copyCode function available:', typeof copyCode === 'function');
     console.log('copyCrosshairCode function available:', typeof copyCrosshairCode === 'function');
