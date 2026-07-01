@@ -1,7 +1,7 @@
 // Copy promo code
 function copyCode() {
     console.log('copyCode function called');
-    const code = 'DARELXKANA';
+    const code = 'd4r311';
     
     if (navigator.clipboard) {
         navigator.clipboard.writeText(code).then(() => {
