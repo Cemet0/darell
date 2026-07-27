@@ -473,43 +473,6 @@ body {
     margin-top: 4px;
 }
 
-/* Webcam */
-.webcam-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 500;
-    transition: all 0.3s;
-}
-
-.webcam-item:hover {
-    background: rgba(255, 255, 255, 0.04);
-}
-
-.webcam-icon {
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
-    opacity: 0.8;
-}
-
-.webcam-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-}
-
-.highlight {
-    color: #ffffff;
-    font-weight: 600;
-}
 
 /* Toast */
 .toast {
@@ -565,16 +528,5 @@ body {
     
     .setup-label {
         min-width: auto;
-    }
-    
-    .webcam-item {
-        padding: 16px;
-        font-size: 14px; /* Perkecil sedikit agar teks tidak terpotong ke bawah */
-        gap: 12px;
-    }
-
-    .webcam-icon {
-        width: 28px;
-        height: 28px;
     }
 }
