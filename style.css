@@ -141,8 +141,8 @@ body {
     border-color: rgba(255, 255, 255, 0.2);
 }
 .action-btn.topup:hover {
-    box-shadow: 0 10px 25px rgba(220, 20, 20, 0.15);
-    border-color: rgba(220, 20, 20, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 102, 0, 0.15);
+    border-color: rgba(255, 102, 0, 0.3);
 }
 
 .action-icon {
@@ -455,6 +455,7 @@ body {
     font-size: 14px;
     min-width: 140px;
     flex-shrink: 0;
+    text-transform: uppercase;
 }
 
 .setup-value {
