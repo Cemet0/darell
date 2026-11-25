@@ -18,9 +18,11 @@ function copyCode() {
 }
 
 // Copy crosshair code
-function copyCrosshairCode() {
+function copyCrosshairCode(event) {
     console.log('copyCrosshairCode function called');
-    const crosshairCode = '0;P;c;5;h;0;d;1;z;3;0t;4;0l;3;0v;3;0o;0;0a;1;0f;0;1b;0';
+    const btn = event && event.currentTarget;
+    const codeEl = btn && btn.closest('.crosshair-code') && btn.closest('.crosshair-code').querySelector('.code');
+    const crosshairCode = codeEl ? codeEl.textContent.trim() : '0;P;c;5;h;0;d;1;z;3;0t;4;0l;3;0v;3;0o;0;0a;1;0f;0;1b;0';
     
     if (navigator.clipboard) {
         navigator.clipboard.writeText(crosshairCode).then(() => {
@@ -66,20 +68,7 @@ function fallbackCopy(text, message) {
 
 // Show toast notification
 function showToast(message) {
-    console.log('showToast called with message:', message);
-    const toast = document.getElementById('toast');
-    if (toast) {
-        toast.textContent = message;
-        toast.classList.add('show');
-        console.log('Toast shown');
-        
-        setTimeout(() => {
-            toast.classList.remove('show');
-            console.log('Toast hidden');
-        }, 2500);
-    } else {
-        console.error('Toast element not found');
-    }
+    // Notifikasi dihapus: perangkat sudah menampilkan notifikasi copy sendiri
 }
 
 // Initialize when page loads
@@ -102,6 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Crosshair copy button event listener added');
     } else {
         console.error('Crosshair copy button not found');
+    }
+
+    const crosshairCopyBtn2 = document.getElementById('crosshair-copy-btn-2');
+    if (crosshairCopyBtn2) {
+        crosshairCopyBtn2.addEventListener('click', copyCrosshairCode);
     }
     
     // Test if functions are available
